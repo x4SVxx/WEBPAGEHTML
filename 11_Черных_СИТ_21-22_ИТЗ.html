@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>11_Черных_СИТ_21-22_ИТЗ</title>
+        <style>
+            table.text  {
+            width: 55%; /* Ширина таблицы */
+            }
+            table.text td {
+            width: 50%; /* Ширина ячеек */
+            vertical-align: top; /* Выравнивание строк по верхнему краю */
+            }
+  </style>
+</head>
+<body bgcolor="#ffffff" style="font-family:Arial">
+    <h3 style="position: relative; text-align: center;">
+        <a href="https://mpei.ru/Pages/default.aspx" target="_blank" style="color: #000080"
+        title="https://mpei.ru/Pages/default.aspx">
+            НАЦИОНАЛЬНЫЙ ИССЛЕДОВАТЕЛЬСКИЙ УНИВЕРСИТЕТ "МЭИ"
+        </a>
+    </h3>
+    <h3 style="position: relative; text-align: center;">
+        <a href="https://mpei.ru/Structure/Universe/ire/Pages/default.aspx" target="_blank" style="color: #000080"
+        title="https://mpei.ru/Structure/Universe/ire/Pages/default.aspx">
+            ИНСТИТУТ РАДИОТЕХНИКИ И ЭЛЕКТРОНИКИ
+        </a>
+    </h3>
+        <h3 style="position: relative; text-align: center;">
+        <a href="https://mpei.ru/STRUCTURE/UNIVERSE/IRE/STRUCTURE/RES/Pages/default.aspx" target="_blank" style="color: #000080"
+        title="https://mpei.ru/STRUCTURE/UNIVERSE/IRE/STRUCTURE/RES/Pages/default.aspx">
+            КАФЕДРА РАДИОТЕХНИЧЕСКИХ СИСТЕМ
+        </a>
+    </h3>
+    <hr>
+    <br/><br/><br/>
+    <h2 style="position: relative; text-align: center;">ГЕОМЕТРИЧЕСКОЕ СНИЖЕНИЕ ТОЧНОСТИ (GDOP)</h2>
+    <br/><br/><br/><br/>
+    <h3 style="position: relative; text-align: center;">Индивидуальное творческое задание по курсу</h3>
+    <h3 style="position: relative; text-align: center;">"Сетевые информационные технологии"</h3>
+    <br/><br/><br/><br/>
+    <h3 style="position: relative; text-align: right;">Группа: ЭР-11-19</h3>
+    <h3 style="position: relative; text-align: right;">ФИО студента:
+        <a href="https://legacy.mpei.ru/owa/?ae=Item&t=AD.RecipientType.User&id=IE%2b1KVVvpkucoiyRGsRn2A%3d%3d&m=0&oT=IPM.Note&oId=RgAAAABIlDdDh8OvS6t1r3ktc8jJBwDM0J5qqeigQI8tYV%2bibqgsBG2mcczWAADM0J5qqeigQI8tYV%2bibqgsBZuNyyBEAAAJ" target="_blank" style="color: #000080"
+                       title="https://legacy.mpei.ru/owa/?ae=Item&t=AD.RecipientType.User&id=IE%2b1KVVvpkucoiyRGsRn2A%3d%3d&m=0&oT=IPM.Note&oId=RgAAAABIlDdDh8OvS6t1r3ktc8jJBwDM0J5qqeigQI8tYV%2bibqgsBG2mcczWAADM0J5qqeigQI8tYV%2bibqgsBZuNyyBEAAAJ">Черных С.В.</a></h3>
+    <h3 style="position: relative; text-align: right;">ФИО преподавателя:
+                <a href="https://legacy.mpei.ru/owa/?ae=Item&t=AD.RecipientType.User&id=7s3qG0GTxE6UpQPLKZ5lhw%3d%3d&m=0&oT=IPM.Note&oId=RgAAAABIlDdDh8OvS6t1r3ktc8jJBwDM0J5qqeigQI8tYV%2bibqgsBG2mcczWAADM0J5qqeigQI8tYV%2bibqgsBZn3VJS%2bAAAJ" target="_blank" style="color: #000080"
+                       title="https://legacy.mpei.ru/owa/?ae=Item&t=AD.RecipientType.User&id=7s3qG0GTxE6UpQPLKZ5lhw%3d%3d&m=0&oT=IPM.Note&oId=RgAAAABIlDdDh8OvS6t1r3ktc8jJBwDM0J5qqeigQI8tYV%2bibqgsBG2mcczWAADM0J5qqeigQI8tYV%2bibqgsBZn3VJS%2bAAAJ">Губонин Н.С.</a></h3>
+    <br/><br/><br/><br/>
+    <h3 style="position: relative; text-align: center;">Москва 2021 г.</h3>
+    <hr>
+
+        <h3 style="position: relative; text-align: center; color:#808080">Содержание</h3>
+            <h3 style="position: relative; text-align: left">·<a href="#Start" style="color: #000080">Введение</a></h3>
+            <h3 style="position: relative; text-align: left">·<a href="#Methods" style="color: #000080">Методы определения текущего местоположения объекта</a></h3>
+            <h3 style="position: relative; text-align: left">·<a href="#Types" style="color: #000080">Типы позиционных методов</a></h3>
+            <h3 style="position: relative; text-align: left">·<a href="#GDOP" style="color: #000080">Геометрический фактор и методы решения (2D)</a></h3>
+            <h3 style="position: relative; text-align: left">·<a href="#Contrast" style="color: #000080">Сравнение дальномерного и разностно-дальномерного методов</a></h3>
+            <h3 style="position: relative; text-align: left">·<a href="#DirectVisibility" style="color: #000080">Учет прямой видимости при расчете геометрического фактора</a></h3>
+            <h3 style="position: relative; text-align: left">·<a href="#End" style="color: #000080">Выводы</a></h3>
+            <h3 style="position: relative; text-align: left">·<a href="#Literature" style="color: #000080">Список используемых источников</a></h3>
+    <br/>
+    <hr>
+
+    <article id="Start">
+        <h3 style="position: relative; text-align: center; color:#808080">Введение</h3>
+        <img style="position: relative; width: 150px; height: 150px; left: 45.5%;" src="Images/NAVIGATION_2.gif" alt="NAVIGATION_2">
+        <p style="position:relative; left">
+            <br><br>Радионавигационные системы разделяют на две группы: спутниковые системы (GPS, ГЛОНАСС) и системы внутреннего позиционирования.
+            <br><br>
+            <a href="https://ru.wikipedia.org/wiki/Система_внутреннего_позиционирования" target="_blank" style="color: #000080"
+                title="https://ru.wikipedia.org/wiki/Система_внутреннего_позиционирования">
+                Система внутреннего позиционирования (Indoor positioning system, IPS)
+            </a>
+             — локальная система нахождения местоположения внутри зданий и закрытых сооружений, где практически недоступна спутниковая система навигации.
+            На сегодняшний день разработка таких систем  одно из актуальнейших направлений радионавигации.
+            <br><br>IPS используются для мониторинга работников и персонала на производствах, а также для навигации робототехники на автоматизированных складах.
+            <br><br>Одно из самых перспективных и новых направлений радионавигации - это сверхширокополосные(СШП) системы, которые по сравнению с Bluetooth и Wi-fi более точные (достижение сантиметровой точности).
+                    СШП системы, как правило, включают в себя подсистемы маяков и меток, эти системы  инфраструктурны, то есть для их работы необходимо заранее расставить опорные маяки.
+                    Зная координаты заранее расставленных опорных маяков и обработав информацию, полученную (посредствам радиосвязи) маяками от движущихся меток, можно определить координаты этих меток.
+        </p>
+        <img style="position: relative; width: 150px; height: 300px; left: 45%;" src="Images/BEACONTARGET.png" alt="BEACONTARGET">
+
+        <h4 style="position: relative; text-align: center;">СШП приёмо-передатчик от ирландской компании
+            <a href="https://www.decawave.com" target="_blank" style="color: #000080"
+            title="https://www.decawave.com">DecaWave
+            </a>
+        </h4>
+
+        <p style="position:relative; left">
+            <br><br>В зависимости от встроенного программного обеспечения устройство может выполнять либо роль маяка: принимать радиосигналы от движущихся меток,
+                    либо роль метки: посылать радиосигналы опорным маякам.
+            <br><br>Существует множество факторов, влияющих на расстановку опорных маяков. Среди них выделяют два самых важных:
+        </p>
+
+        <h3 style="position: relative; text-align: left;">·Прямая видимость</h3>
+        <p>
+            <img src="Images/VISION.png" width="500" height="250" alt="VISION" align="left">
+                <p style="position:relative; left: 2%">
+                    Стены, колонны, мебель - все это препятствует нормальному прохождению радиосигналов и способствует их переотражению.
+                </p>
+        <br><br><br><br><br><br><br><br><br><br><br><br>
+
+        <h3 style="position: relative; text-align: left;">·Геометрический фактор</h3>
+        <p>
+            <img src="Images/GDOP_1.png" width="500" height="250" alt="GDOP_1" align="left">
+                <p style="position:relative; left: 2%">
+                    Понижение точности (DOP) или геометрическое снижение точности (GDOP) показывает во сколько раз погрешность определения координат метки выше,
+                    чем погрешность первичных измерений и зависит от взаимного расположения метки относительно маяков.
+                </p>
+                <p style="position:relative; left: 2%">
+                    На фото геометрический фактор рассчитан для каждой точки плоскости (с учетом прямой видимости).
+                </p>
+        <br><br><br><br><br><br><br><br><br><br>
+        <hr>
+    </article>
+
+    <article id="Methods">
+        <h3 style="position: relative; text-align: center; color:#808080">Методы определения текущего местоположения объекта</h3>
+        <img style="position: relative; width: 150px; height: 120px; left: 45%;" src="Images/NAVIGATION.gif" alt="NAVIGATION">
+        <p style="position:relative; left">
+            <br><br>Прежде чем углубляться в расчеты геометрического снижения точности, стоит рассмотреть методы определения текущего местоположения объекта.
+            <br><br>Таких методов несколько:<br>
+            <br><b>· Метод счисления пути</b>
+            <br><b>· Обзорно-сравнительный метод</b>
+            <br><b>· Позиционный метод</b>
+            <br><br>Последний особенно широко используется в локальной радионавигации.
+            <br><br><i>Позиционный метод</i> основан на определении местоположения объекта путем засечек, представляющих собой точку пересечения двух или
+                        более линий (поверхностей) положения, относительно известных ориентиров.
+        </p>
+
+        <p>
+            <img src="Images/POSITIONMETHOD_1.png" width="450" height="320" alt="POSITIONMETHOD_1" align="left">
+                <img style="position: relative; width: 310px; height: 120px; left: 1.5%;" src="Images/FORM_1.png" alt="FORM_1">
+                    <p style="position:relative; left: 2%">
+                        Координаты точек А и Б известны (радиомаяки).
+                    </p>
+                    <p style="position:relative; left: 2%">
+                        Измеряются дальности R1 и R2.
+                    </p>
+                    <p style="position:relative; left: 2%">
+                        Объект находится в точке С или Д.
+                    </p>
+                    <p style="position:relative; left: 2%">
+                        Добавив третий радиомаяк, можно избавиться от неопределенности и по пересечению трех окружностей определить положение объекта.
+                    </p>
+                    <br>
+            <br><br><br>
+        <p>
+            <img src="Images/POSITIONMETHOD_2.png" width="450" height="350" alt="POSITIONMETHOD_2" align="left">
+                <img style="position: relative; width: 310px; height: 180px; left: 1.5%;" src="Images/FORM_2.png" alt="FORM_2">
+                    <p style="position:relative; left: 2%">
+                        Координаты точек А и Б известны (радиомаяки).
+                    </p>
+                    <p style="position:relative; left: 2%">
+                        Измеряются углы α и β.
+                    </p>
+                    <p style="position:relative; left: 2%">
+                        Объект находится в точке С.
+                    </p>
+
+        <br><br>
+        <p align="center">Среди достоинств и недостатков позиционного метода можно выделить следующее:</p>
+
+        <table class="text" align="center" cellspacing="10">
+            <tr align="center">
+                <td ><b>Достоинства:</b></td>
+                <td class="rightcol"><b>Недостатки:</b></td>
+            </tr>
+
+            <tr align="left">
+                <td>· Не требуется знание пройденного ранее пути</td>
+                <td class="rightcol">· Необходима инфраструктура (радиомаяки, средства информационного обеспечения)</td>
+            </tr>
+
+            <tr align="left">
+                <td>· Ошибка не накапливается со временем</td>
+                <td class="rightcol">· Низкая помехозащищенность</td>
+            </tr>
+        </table>
+        <br>
+        <hr>
+    </article>
+
+    <article id="Types">
+        <h3 style="position: relative; text-align: center; color:#808080">Типы позиционных методов</h3>
+
+        <p style="position:relative; left">
+            <br><br>Среди множества позиционных методов рассмотрим два самых используемых:
+        </p>
+
+        <article id="D">
+            <h3 style="position: relative; text-align: center;">Дальномерный метод</h3>
+
+            <p align="center">
+                Дальномерный метод позволяет определить пространственные координаты объекта путём измерения
+                дальностей R1, R2, R3 до трёх точек с известными координатами: {x1, y1, z1} {x2, y2, z2} {x3, y3, z3}
+            </p>
+
+            <p>
+                <img src="Images/GRAPH_1.png" width="500" height="500" alt="GRAPH_1" align="right">
+                <img style="position: relative; width: 120px; height: 40px; left: 30%;" src="Images/FORM_3.png" alt="FORM_3">
+                <p align="center">- неизвестные координаты объекта, находятся из решения системы уравнений:</p>
+                <img style="position: relative; width: 400px; height: 170px; left: 23%" src="Images/FORM_4.png" alt="FORM_4">
+                <p align="center">Итерационный метод решения:</p>
+                <img style="position: relative; width: 260px; height: 45px; left: 27%" src="Images/FORM_5.png" alt="FORM_5">
+                <br>
+                <img style="position: relative; width: 540px; height: 90px; left: 18%" src="Images/FORM_6.png" alt="FORM_6">
+                <br><br><br><br>
+        </article>
+
+        <article id="RD">
+            <h3 style="position: relative; text-align: center;">Разностно-дальномерный метод</h3>
+
+            <p align="center">
+                Разностно-дальномерный метод основан на использовании разностей расстояний объекта до пар
+                точек с известными координатами. На входе: разности дальностей, на выходе: координаты объекта.
+            </p>
+
+            <p>
+                <img src="Images/GRAPH_2.png" width="750" height="500" alt="GRAPH_2" align="left">
+                <br><br>
+                <p align="left">Линии положения – гиперболы. Объект находится в точке пересечения линий положения.</p>
+                <br><br>
+                <p align="left">* Разностно-дальномерный метод применяют, когда дальности до маяков
+                    найти нельзя, но можно найти разности дальностей.</p>
+                <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+        </article>
+
+        <hr>
+    </article>
+
+    <article id="GDOP">
+        <h3 style="position: relative; text-align: center; color:#808080">Геометрический фактор и методы решения (2D)</h3>
+
+        <p align="center">Не при любой геометрии взаимного расположения радиомаяков и объекта решение навигационной задачи возможно</p>
+        <img style="position: relative; width: 1000px; height: 500px; left: 15%;" src="Images/GEO.png" alt="GEO">
+        <br><br>
+        <p align="center">Для нахождения геометрического фактора(GDOP) используется следующий алгоритм:</p>
+        <p align="center">Расстояние между точкой и i-ым маяком c координатами:</p>
+        <img style="position: relative; width: 180px; height: 50px; left: 44%;" src="Images/FORM_7.png" alt="FORM_7">
+        <p align="center">Если у есть N опорных точек, то вектор измерений y содержит N элементов:</p>
+        <img style="position: relative; width: 450px; height: 130px; left: 35%;" src="Images/FORM_8.png" alt="FORM_8">
+        <p align="center">По факту имеем функцию:</p>
+        <img style="position: relative; width: 190px; height: 35px; left: 45%;" src="Images/FORM_9.png" alt="FORM_9">
+        <p align="center">Для вычисления геометрического фактора необходимо составить градиентную матрицу H,
+            которая является производной от функции F по вектору координат x.</p>
+        <img style="position: relative; width: 280px; height: 160px; left: 40%;" src="Images/FORM_10.png" alt="FORM_10">
+        <p align="center">В нашем случае:</p>
+        <img style="position: relative; width: 260px; height: 200px; left: 40%;" src="Images/FORM_11.png" alt="FORM_11">
+
+        <table class="text" align="center" cellspacing="10">
+            <tr align="center">
+                <td ><b>Для <a href="#D" style="color: #000080">дальномерного метода</a>:</b></td>
+                <td class="rightcol"><b>Для <a href="#RD" style="color: #000080">разностно-дальномерного метода</a>:</b></td>
+            </tr>
+            <tr align="center">
+                <td><img style="position: relative; width: 500px; height: 250px;" src="Images/D.png" alt="D"></td>
+                <td class="rightcol"><img style="position: relative; width: 800px; height: 270px;" src="Images/RD.png" alt="D"></td>
+            </tr>
+        </table>
+        <br>
+
+        <p align="left">где Xм, Yм - координаты мастер-маяка. Он принимает от вспомогательных маяков их координаты и отправляет на сервер. Если у вспомогательного маяка нет доступа к мастер-маяку, он перестает участвовать в расчетах видимости.</p>
+        <p align="center">Если есть градиентная матрица, то можно рассчитать геометрический фактор по формуле:</p>
+        <img style="position: relative; width: 270px; height: 50px; left: 42%;" src="Images/FORM_12.png" alt="FORM_12">
+        <p align="center">trace – это оператор, который осуществляет сложение квадратов диагональных элементов матрицы.</p>
+        <br>
+        <p align="center">В итоге получим число, которое, как говорилось ранее, показывает во сколько раз погрешность определения координат метки выше, чем погрешность первичных измерений.</p>
+        <br>
+        <h3 style="position: relative; text-align: center;">Интерпретация</h3>
+
+        <table align="center">
+            <colgroup>
+                <col style="background:Khaki">
+                <col style="background-color:LightGrey">
+                <col style="background-color:LightCyan">
+            </colgroup>
+            <tr>
+                <th>Значение GDOP</th>
+                <th>Рейтинг</th>
+                <th>Описание</th>
+            </tr>
+            <tr>
+                <td><1</td>
+                <td>Идеальный</td>
+                <td>Максимально возможный уровень достоверности для использования в приложениях, где всегда требуется максимально возможная точность</td>
+            </tr>
+            <tr>
+                <td>1-2</td>
+                <td>Отличный</td>
+                <td>На этом уровне достоверности позиционные измерения считаются достаточно точными, чтобы соответствовать всем приложениям, кроме наиболее чувствительных</td>
+            </tr>
+            <tr>
+                <td>2-5</td>
+                <td>Хороший</td>
+                <td>Представляет уровень, который отмечает минимум, подходящий для принятия точных решений. Позиционные измерения могут использоваться для предоставления пользователю надежных рекомендаций по навигации по маршруту</td>
+            </tr>
+            <tr>
+                <td>5-10</td>
+                <td>Умеренный</td>
+                <td>Позиционные измерения можно использовать для расчетов, но качество фиксации все же можно улучшить. Рекомендуется более открытый вид на небо</td>
+            </tr>
+            <tr>
+                <td>10-20</td>
+                <td>Плохой</td>
+                <td>Представляет низкий уровень достоверности. Позиционные измерения следует отбросить или использовать только для очень приблизительной оценки текущего местоположения</td>
+            </tr>
+            <tr>
+                <td>>20</td>
+                <td>Бедный</td>
+                <td>На этом уровне измерения неточны на целых 300 метров с помощью устройства с 6-метровой точностью (50 DOP × 6 метров), и от них следует отказаться</td>
+            </tr>
+        </table>
+        <p align="left">При навигации в помещениях значения GDOP более 20 дает очень большую погрешность, поэтому нужно выбирать конфигурацию опорных маяков, позволяющую получить наименьшее значение GDOP.</p>
+        <br/>
+        <p align="left">Рассчитав значение геометрического фактора на всей исследуемой плоскости (например, через каждый сантиметр), можно построить тепловую карту и определить области с хорошей и плохой видимостью (красный цвет - плохая видимость, зеленый - хорошая видимость).</p>
+        <img style="position: relative; width: 800px; height: 500px; left: 26%;" src="Images/GDOP_PR_1.png" alt="GDOP_PR_1">
+        <p align="center">Тепловая карта распределения геометрического фактора. Конфигурация: 6 опорных маяков. <a href="#D" style="color: #000080">Дальномерный метод</a></p>
+        <img style="position: relative; width: 800px; height: 500px; left: 26%;" src="Images/GDOP_PR_2.png" alt="GDOP_PR_2">
+        <p align="center">Тепловая карта распределения геометрического фактора. Конфигурация: 6 опорных маяков. <a href="#RD" style="color: #000080">Разностно-дальномерный метод</a></p>
+        <br/>
+        <hr>
+    </article>
+
+    <article id="Contrast">
+        <h3 style="position: relative; text-align: center; color:#808080">Сравнение дальномерного и разностно-дальномерного методов</h3>
+        <p align="left">Как видно из вышеприведенных фотографий, тепловые карты распространения геометрического фактора при дальномерном и разностно-дальномерном методах расчетов различаются.</p>
+        <p align="left">Для наглядности расставим опорные маяки по окружности и построим зависимости значения геометрического фактора от расстояния от центра окружности. Зависимости построим при разном количестве опорных маяков.</p>
+        <img style="position: relative; width: 600px; height: 400px; left: 33%;" src="Images/CONTRAST_CONFIGURATION.png" alt="CONTRAST_CONFIGURATION">
+        <p align="left">N - количество опорных маяков, M - радиальная линия (предположим M = 10 метров), зависимость геометрического фактора от расстояния от центра окружности - вдоль зеленой линии.</p>
+        <img style="position: relative; width: 600px; height: 400px; left: 33%;" src="Images/CONTRAST_D.jpg" alt="CONTRAST_D">
+        <p align="center">Зависимость значения геометрического фактора от расстояния от центра окружности, на которой расположены опорные маяки. <a href="#D" style="color: #000080">Дальномерный метод</a></p>
+        <img style="position: relative; width: 600px; height: 400px; left: 33%;" src="Images/CONTRAST_RD.jpg" alt="CONTRAST_RD">
+        <p align="center">Зависимость значения геометрического фактора от расстояния от центра окружности, на которой расположены опорные маяки. <a href="#RD" style="color: #000080">Разностно-дальномерный метод</a></p>
+        <img style="position: relative; width: 600px; height: 400px; left: 33%;" src="Images/CONTRAST_D_RD.jpg" alt="CONTRAST_D_RD">
+        <p align="center">Зависимость значения геометрического фактора от расстояния от центра окружности, на которой расположены опорные маяки. <a href="#D" style="color: #000080">Дальномерный метод</a> (черные линии) и <a href="#RD" style="color: #000080">Разностно-дальномерный метод</a>  (красные линии) на одном графике</p>
+        <br/>
+        <p align="left">По полученным зависимостям можно сделать следующие выводы:</p>
+        <p align="left">- Значение GDOP увеличивается с ростом расстояния от центра окружности до точки расчета.</p>
+        <p align="left">- При расчете по <a href="#RD" style="color: #000080">разностно-дальномерному</a> методу значение GDOP очень мало на расстоянии, не превышающем радиус окружности. Далее идет резкий рост GDOP, что ухудшает видимость.</p>
+        <p align="left">- При расчете по <a href="#D" style="color: #000080">дальномерному</a> методу значение GDOP внутри окружности чуть больше, чем при расчете по <a href="#RD" style="color: #000080">разностно-дальномерному методу</a>, но при расстоянии, большем радиуса окружности, GDOP увеличивается с меньшей скоростью, что дает хорошую видимость и за пределами окружности.</p>
+        <p align="left">- Чем больше опорных маяков, тем меньше значение геометрического фактора.</p>
+        <br/>
+        <hr>
+    </article>
+
+
+
+
+    <article id="DirectVisibility">
+        <h3 style="position: relative; text-align: center; color:#808080">Учет прямой видимости при расчете геометрического фактора</h3>
+        <p align="left">В большинстве помещений присутсвуют различные перегородки, стены и колонны, которые препятствуют передачи информации между маяками. Поэтому необходимо учитывать этот фактор.</p>
+        <p align="left">Рассмотрим несколько планов помещений и конфигураций опорных маяков, рассчитаем тепловую карту распределения геометрического фактора с учетом прямой видимости.</p>
+
+        <img style="position: relative; width: 600px; height: 400px; left: 33%;" src="Images/PLAN_1.png" alt="PLAN_1">
+        <table class="text" align="center" cellspacing="10">
+            <tr align="center">
+                <td ><b>Расчет по <a href="#D" style="color: #000080">дальномерному методу</a>:</b></td>
+                <td class="rightcol"><b>Расчет по <a href="#RD" style="color: #000080">разностно-дальномерному методу</a>:</b></td>
+            </tr>
+            <tr align="center">
+                <td><img style="position: relative; width: 600px; height: 500px;" src="Images/D_PLAN_1.png" alt="D_PLAN_1"></td>
+                <td class="rightcol"><img style="position: relative; width: 600px; height: 500px;" src="Images/RD_PLAN_1.png" alt="RD_PLAN_1"></td>
+            </tr>
+        </table>
+
+        <img style="position: relative; width: 600px; height: 400px; left: 33%;" src="Images/PLAN_2.jpg" alt="PLAN_2">
+        <table class="text" align="center" cellspacing="10">
+            <tr align="center">
+                <td ><b>Расчет по <a href="#D" style="color: #000080">дальномерному методу</a>:</b></td>
+                <td class="rightcol"><b>Расчет по <a href="#RD" style="color: #000080">разностно-дальномерному методу</a>:</b></td>
+            </tr>
+            <tr align="center">
+                <td><img style="position: relative; width: 600px; height: 500px;" src="Images/D_PLAN_2.png" alt="D_PLAN_2"></td>
+                <td class="rightcol"><img style="position: relative; width: 600px; height: 500px;" src="Images/RD_PLAN_2.png" alt="RD_PLAN_2"></td>
+            </tr>
+        </table>
+
+        <img style="position: relative; width: 300px; height: 400px; left: 40%;" src="Images/PLAN_3.jpg" alt="PLAN_3">
+        <table class="text" align="center" cellspacing="10">
+            <tr align="center">
+                <td ><b>Расчет по <a href="#D" style="color: #000080">дальномерному методу</a>:</b></td>
+                <td class="rightcol"><b>Расчет по <a href="#RD" style="color: #000080">разностно-дальномерному методу</a>:</b></td>
+            </tr>
+            <tr align="center">
+                <td><img style="position: relative; width: 600px; height: 500px;" src="Images/D_PLAN_3.png" alt="D_PLAN_3"></td>
+                <td class="rightcol"><img style="position: relative; width: 600px; height: 500px;" src="Images/RD_PLAN_3.png" alt="RD_PLAN_1"></td>
+            </tr>
+        </table>
+    <p align="left">Как можно заметить, при недостаточном количестве опорных маяков в комнатах появляются зоны с плохой видимостью, поэтому нужно подбирать оптимальную конфигурацию опорных маяков для каждого помещения.</p>
+    <br/>
+    <hr/>
+    </article>
+
+    <article id="End">
+        <h3 style="position: relative; text-align: center; color:#808080">Выводы</h3>
+        <p align="left">Основными целями индивидуального творческого задания являлись: поиск информации по выбранной теме в сети Internet, адекватное структурирование найденной в Internet информации и ее изложение на гипертекстовом языке разметки документов.
+        Для поиска информации использовалась поисковая система "Яндекс" с запросами "GDOP" и "Геометрический фактор". Среди сложностей можно выделить слишком углубленную и труднопонимаемую информацию, представленную на некоторых источниках и нехватку знаний в области навигации.
+        На большинстве сайтов давалась только часть информации по нужной теме, поэтому необходимо использовать несколько источников для более полного изложения и понимания информации.
+        Для написания индивидуального творческого задания использовалась интегрированная среда разработки <a href="https://www.jetbrains.com/pycharm/" target="_blank" style="color: #000080"
+                       title="https://ru.wikipedia.org/wiki/HTML">PyCharm</a>, позволяющая создавать web-страницы на <a href="https://ru.wikipedia.org/wiki/HTML" target="_blank" style="color: #000080"
+                       title="https://ru.wikipedia.org/wiki/HTML">HTML</a>.</p>
+        <br/>
+        <hr>
+
+    </article>
+
+    <article id="Literature">
+        <h3 style="position: relative; text-align: center; color:#808080">Список используемых источников</h3>
+
+        <table align="center">
+            <colgroup>
+                <col>
+                <col>
+                <col>
+            </colgroup>
+            <tr>
+                <th>№</th>
+                <th>Ссылка</th>
+                <th>Описание</th>
+            </tr>
+
+            <tr>
+                <td>1.</td>
+                <td>
+                    <a href="https://ru.wikipedia.org/wiki/DOP" target="_blank" style="color: #000080"
+                       title="https://ru.wikipedia.org/wiki/DOP">https://ru.wikipedia.org/wiki/DOP</a>
+                </td>
+                <td>Общедоступная многоязычная универсальная интернет-энциклопедия со свободным контентом</td>
+            </tr>
+
+            <tr>
+                <td>2.</td>
+                <td>
+                    <a href="https://www.srns.ru/images/5/5e/ОТРСК_Лк2.pdf" target="_blank" style="color: #000080"
+                       title="https://www.srns.ru/images/5/5e/ОТРСК_Лк2.pdf">https://www.srns.ru/images/5/5e/ОТРСК_Лк2.pdf</a>
+                </td>
+                <td>Портал Лаборатории Навигационных Систем и кафедры РТС НИУ МЭИ</td>
+            </tr>
+
+            <tr>
+                <td>3.</td>
+                <td>
+                    <a href="https://ru.abcdef.wiki/wiki/Dilution_of_precision_(navigation)" target="_blank" style="color: #000080"
+                       title="https://ru.abcdef.wiki/wiki/Dilution_of_precision_(navigation)">https://ru.abcdef.wiki/wiki/Dilution_of_precision_(navigation)</a>
+                </td>
+                <td>Интернет-энциклопедия</td>
+            </tr>
+
+            <tr>
+                <td>4.</td>
+                <td>
+                    <a href="https://www.decawave.com" target="_blank" style="color: #000080"
+                       title="https://www.decawave.com">https://www.decawave.com</a>
+                </td>
+                <td>Сайт компании DecaWave (Дублин, Ирландия) – разработчик интегральных схем для UWB-навигации в помещениях</td>
+            </tr>
+
+            <tr>
+                <td>5.</td>
+                <td>
+                    <a href="https://studref.com/320220/tehnika/pogreshnosti_navigatsionnyh_resheniy_sputnikovyh_sistem" target="_blank" style="color: #000080"
+                       title="https://studref.com/320220/tehnika/pogreshnosti_navigatsionnyh_resheniy_sputnikovyh_sistem">https://studref.com/320220/tehnika/pogreshnosti_navigatsionnyh_resheniy_sputnikovyh_sistem</a>
+                </td>
+                <td>Студенческие рефератные статьи и материалы</td>
+            </tr>
+
+            <tr>
+                <td>6.</td>
+                <td>
+                    <a href="https://htmlacademy.ru" target="_blank" style="color: #000080"
+                       title="https://htmlacademy.ru">https://htmlacademy.ru</a>
+                </td>
+                <td>Интерактивные онлайн-курсы по HTML</td>
+            </tr>
+
+            <tr>
+                <td>7.</td>
+                <td>
+                    <a href="https://vuzlit.ru/2200565/koeffitsienty_poteri_tochnosti" target="_blank" style="color: #000080"
+                       title="https://vuzlit.ru/2200565/koeffitsienty_poteri_tochnosti">https://vuzlit.ru/2200565/koeffitsienty_poteri_tochnosti</a>
+                </td>
+                <td>Архив студенческих работ</td>
+            </tr>
+
+        </table>
+        <br/>
+    </article>
+
+</body>
+</html>
